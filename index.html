@@ -1,0 +1,80 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .cell {
+            width:50px;
+            height:50px;
+            display: inline-block;
+            border:1px solid black;
+        }
+        .cell.hit {
+            background : darkred;
+        }
+        .cell.miss {
+            background : darkgrey;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+
+    var boardEl = document.createElement('div');
+    var boardArr = [];
+    var shipsArr = [];
+    var target;
+    var boardSize = 3;
+    var letters = ['a','b','c','d','e','f','g'];
+    var boardLetters = letters.splice(0,boardSize);
+
+    boardEl.setAttribute('id', 'board');
+
+    for (var i=0; i < boardSize; i++){
+
+        for (var j=0; j < boardSize; j++){
+
+            var cell = document.createElement('span');
+            cell.dataset.cellid = boardLetters[i]+j;
+            cell.className = 'cell';
+            var cellText = document.createTextNode(boardLetters[i]+(j+1));
+            cell.appendChild(cellText);
+
+            boardEl.appendChild(cell);
+
+            boardArr.push(boardLetters[i]+j);
+
+        }
+        boardEl.appendChild(document.createElement('br'));
+    }
+    document.body.appendChild(boardEl);
+    console.log(boardArr);
+
+    // todo: randomize ships
+    shipsArr = ['a0', 'a1', 'a2'];
+
+    // shoot
+    function getCellId(e) {
+
+        if(e.target.dataset.cellid){
+
+            var targetid = e.target.dataset.cellid;
+
+            if(shipsArr.indexOf(targetid) != -1){
+
+                //sink the ship
+                e.target.className += ' hit';
+
+            } else {
+
+                e.target.className += ' miss';
+            }
+        }
+    }
+    document.onclick = getCellId;
+
+
+</script>
+</body>
+</html>
