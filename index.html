@@ -18,8 +18,13 @@
     </style>
 </head>
 <body>
-
+<script src="script.js"></script>
 <script>
+    // initialize the game;
+    var options = {
+        boardSize : prompt('boardsize')
+    };
+    ShipGame.init(options);
 
     var boardEl = document.createElement('div');
     var boardArr = [];
@@ -28,7 +33,7 @@
     var letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','r','s','t','u','v','w','x','y','z'];
     var boardSize;
 
-    // promt the user to choose difficulty, check if in allowed range and keep prompting
+    // prompt the user to choose difficulty, check if in allowed range and keep prompting
     while(boardSize == undefined || boardSize < 3 || boardSize > letters.length ) {
 
         boardSize = prompt('Choose your difficulty (3 - easiest, ' + letters.length + ' - hardest)');
