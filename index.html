@@ -4,8 +4,8 @@
     <title>Document</title>
     <style>
         .cell {
-            width:50px;
-            height:50px;
+            width:30px;
+            height:30px;
             display: inline-block;
             border:1px solid black;
         }
@@ -25,8 +25,17 @@
     var boardArr = [];
     var shipsArr = [];
     var target;
-    var boardSize = 3;
-    var letters = ['a','b','c','d','e','f','g'];
+    var letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','r','s','t','u','v','w','x','y','z'];
+    var boardSize;
+
+    // promt the user to choose difficulty, check if in allowed range and keep prompting
+    while(boardSize == undefined || boardSize < 3 || boardSize > letters.length ) {
+
+        boardSize = prompt('Choose your difficulty (3 - easiest, ' + letters.length + ' - hardest)');
+    }
+
+    // if board size is out of range, prompt again
+    //boardSize = boardSize >= 3 && boardSize <= letters.length ? boardSize : prompt('Choose your difficulty (3 - easiest, ' + letters.length + ' - hardest)');
     var boardLetters = letters.splice(0,boardSize);
 
     boardEl.setAttribute('id', 'board');
