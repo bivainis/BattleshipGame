@@ -5,11 +5,11 @@ var ShipGame = (function(){
         // letters for board cells
         _lettersArr = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','r','s','t','u','v','w','x','y','z'],
         _boardLettersArr,
-        _shipLocationsArr = ['a1','a2','a3'],
+        _shipLocationsArr = [],
         _boardArr = [],
         _options = {
             boardSize : 7, // default size
-            ships : [3,3,3]
+            ships : [3,2,1]
         };
 
     var _setOptions = function(options){
@@ -55,9 +55,10 @@ var ShipGame = (function(){
 
         // todo:
         // 1) for each ship inside ships array
-        // 2) random position in board array for ship start
-        // 3) insert it to _shipLocationsArr
-        // ranodmize orientation: 0 - horizontal, 1 - vertical
+        // 2) ranodmize orientation: 0 - horizontal, 1 - vertical
+        // 3) random position in board array for ship start
+        //  3a) make sure that positions are unique
+        // 4) insert ship position id into _shipLocationsArr
         // if ship orientation is 0:
         // while ship.length,
         //      while ship position + ship length < board length
@@ -73,13 +74,37 @@ var ShipGame = (function(){
         // (1)
         for(var i=0; i < _options.ships.length; i++){
 
-            console.log(_options.ships[i]);
+            var shipSize = _options.ships[i];
+            console.log(shipSize);
 
-            // (2)
-            var shipStartsAt = _boardArr[Math.floor(Math.random() * _boardArr.length)];
+            // (2) - ranodmize orientation: 0 - horizontal, 1 - vertical
+            var shipOrientation = Math.floor(Math.random() * [0,1].length);
 
-            console.log(shipStartsAt);
+            // (3) - set random ship start position from board array
+            var shipStartsAt = Math.floor(Math.random() * _boardArr.length);
+
+            // (4) - insert starting ship position ids into _shipLocationsArr
+            _shipLocationsArr.push(_boardArr[shipStartsAt]);
+
+            for(var j = 1; j < shipSize; j++){
+
+                // if position is horizontal
+                if(shipOrientation == 0){
+
+                    shipStartsAt++;
+                    _shipLocationsArr.push(_boardArr[shipStartsAt]);
+
+
+                } else if(shipOrientation == 1) {
+
+                    // code for vertical position
+                    shipStartsAt += _options.boardSize;
+                    _shipLocationsArr.push(_boardArr[shipStartsAt]);
+                }
+
+            }
         }
+        console.log(_shipLocationsArr);
     };
 
     var _fire = function(e){
