@@ -52,9 +52,58 @@ var ShipGame = (function(){
         // place the ships
         _placeShips();
     };
+    var _getRandomArrayIndex = function(arr){
 
+        return Math.floor(Math.random() * arr.length);
+    };
+
+    var _addShipCell = function(cell){
+        _shipLocationsArr.push(cell);
+    };
+    var _calcForbiddenPositions = function(shipSize){
+
+        var badPosArr = [];
+        var badPos = _options.boardSize - shipSize + 1;
+
+        for(var k = 0; k < _options.boardSize; k++){
+
+            for(var l=0; l < shipSize - 1; l++){
+
+                badPosArr.push(badPos+l);
+            }
+
+            badPos += _options.boardSize;
+        }
+
+        return badPosArr;
+    };
     var _placeShips = function(){
 
+        for (var i=0; i < _options.ships.length; i++){
+
+            var randomPosition,
+                randomCell,
+                shipSize,
+                badPosArr,
+                j;
+
+            randomPosition = _getRandomArrayIndex(_boardArr);
+            randomCell = _boardArr[randomPosition];
+            shipSize = _options.ships[i];
+            badPosArr = _calcForbiddenPositions(shipSize);
+
+            if(badPosArr.indexOf(randomPosition) != -1){
+                randomPosition -= shipSize -1;
+            }
+
+            for (j=0; j < _options.ships[i];j++){
+
+                _shipLocationsArr.push(_boardArr[randomPosition]);
+                randomPosition++;
+            }
+        }
+    };
+    console.log(_shipLocationsArr);
         // todo:
         // 1) for each ship inside ships array
         // 2) ranodmize orientation: 0 - horizontal, 1 - vertical
@@ -63,8 +112,8 @@ var ShipGame = (function(){
         //      check if value already exists in array
         //      if yes, randomize a new value
         // 4) insert ship position id into _shipLocationsArr
-        // if ship orientation is 0:
-        // while ship.length,
+        // 5) if ship orientation is 0:
+        //    while ship.length,
         //      while ship position + ship length < board length
         //          insert another position after 1 element
         //          _shipLocationsArr.push(position);
@@ -75,47 +124,71 @@ var ShipGame = (function(){
         // while ship.length, insert another position after exactly board length
 
         // (1)
+        /*
         for(var i=0; i < _options.ships.length; i++){
 
             var shipSize = _options.ships[i];
-            //console.log(shipSize);
 
             // (2) - ranodmize orientation: 0 - horizontal, 1 - vertical
-            var shipOrientation = Math.floor(Math.random() * [0,1].length);
+            //var shipOrientation = Math.floor(Math.random() * [0].length);
 
-//            console.log(_shipLocationsArr);
 
             // (3) - set random ship start position from board array
             var shipStartsAt = Math.floor(Math.random() * _boardArr.length);
 
+            var badPosArr = [];
+            var badPos = _options.boardSize - shipSize + 1;
+
+            for(var k = 0; k < _options.boardSize; k++){
+
+                for(var j=0; j < shipSize - 1; j++){
+
+                    badPosArr.push(badPos+j);
+                }
+
+                badPos += _options.boardSize;
+            }
+
+            console.log('bpa: ' + badPosArr);
+
             // (3a) - make sure that ship starting positions are unique
             while(1){
+
                 if(_shipLocationsArr.indexOf(_boardArr[shipStartsAt]) == -1){
+
+                    console.log(_shipLocationsArr.indexOf(_boardArr[shipStartsAt]));
+
+                    if(badPosArr.indexOf(_boardArr[shipStartsAt] == -1)){
+                        console.log('not in bad pos');
+                    } else {
+                        console.log('bad pos');
+                    }
+                    // make sure starting position for a ship size is correct distance from board edge
+
+
                     // (4) - insert starting ship position ids into _shipLocationsArr
                     _shipLocationsArr.push(_boardArr[shipStartsAt]);
+
                     break;
                 } else {
+                    // generate new starting index
                     shipStartsAt = Math.floor(Math.random() * _boardArr.length);
                     continue;
                 }
             }
 
-            if (_shipLocationsArr.indexOf(_boardArr[shipStartsAt]) == -1){
-                // console.log('position doesnt exist');
-
-            } else {
-                // console.log('exists');
-
-            }
-
-//console.log(shipStartsAt);
-
-
-            for(var j = 1; j < shipSize; j++){
+//            console.log('board length: ' + _boardArr.length);
+//            console.log('board size: ' + _options.boardSize);
+//            console.log('ship size: ' + shipSize);
+//            console.log('ship starts at: ' + shipStartsAt);
+*/
+            // (5) - run through each ship length
+           /* for(var p = 1; p < shipSize; p++){
 
                 // if position is horizontal
                 if(shipOrientation == 0){
 
+                    //console.log(shipStartsAt);
                     shipStartsAt++;
                     _shipLocationsArr.push(_boardArr[shipStartsAt]);
 
@@ -124,13 +197,13 @@ var ShipGame = (function(){
 
                     // code for vertical position
                     shipStartsAt += _options.boardSize;
+
                     _shipLocationsArr.push(_boardArr[shipStartsAt]);
                 }
-
-            }
-        }
-        console.log(_shipLocationsArr);
-    };
+            }*/
+       /* }*/
+        //console.log(_shipLocationsArr);
+    //};
 
     var _fire = function(e){
 

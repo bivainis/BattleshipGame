@@ -20,3 +20,4 @@ v2:
 * slide out unused version
 * maybe canvas
 * add letter and number indexes
+* god mode into options
