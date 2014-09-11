@@ -1,7 +1,7 @@
 var ShipGame = (function(){
 
     var _boardEl,
-    // letters for board cells
+        // letters for board cells
         _lettersArr = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','r','s','t','u','v','w','x','y','z'],
         _boardLettersArr,
         _shipLocationsArr = ['a0', 'a1', 'a2'],
@@ -54,17 +54,28 @@ var ShipGame = (function(){
         if(e.target.dataset.cellid){
 
             var targetid = e.target.dataset.cellid;
+            var arrayIndex = _shipLocationsArr.indexOf(targetid);
 
-            if(_shipLocationsArr.indexOf(targetid) != -1){
+            if(arrayIndex != -1){
+
+                _shipLocationsArr.splice(arrayIndex, 1);
 
                 //sink the ship
                 e.target.className += ' hit';
 
+                if(_shipLocationsArr.length == 0){
+
+                    _win();
+                }
             } else {
 
                 e.target.className += ' miss';
             }
         }
+
+    };
+    var _win = function(){
+        alert('Congratulations, you have won the game');
     };
     var init = function(opts){
 
