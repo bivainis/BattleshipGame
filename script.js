@@ -5,7 +5,7 @@ var ShipGame = (function(){
         // letters for board cells
         _lettersArr = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','r','s','t','u','v','w','x','y','z'],
         _boardLettersArr,
-        _shipLocationsArr,
+        _shipLocationsArr = ['a1','a2','a3'],
         _boardArr = [],
         _options = {
             boardSize : 7, // default size
@@ -38,7 +38,7 @@ var ShipGame = (function(){
                 cell.appendChild(cellText);
 
                 _boardEl.appendChild(cell);
-                console.log(_boardArr);
+                //console.log(_boardArr);
                 _boardArr.push(_boardLettersArr[i]+j);
 
             }
@@ -53,13 +53,33 @@ var ShipGame = (function(){
 
     var _placeShips = function(){
 
-        // todo: array shuffle? ..maybe not
-        // todo: push to boardArr
-        // ship 1 locations
-        // set to vertical or horizontal
-        var orientation = 0; // horizontal
-        console.log(_boardArr);
-       // _shipLocationsArr.push();
+        // todo:
+        // 1) for each ship inside ships array
+        // 2) random position in board array for ship start
+        // 3) insert it to _shipLocationsArr
+        // ranodmize orientation: 0 - horizontal, 1 - vertical
+        // if ship orientation is 0:
+        // while ship.length,
+        //      while ship position + ship length < board length
+        //          insert another position after 1 element
+        //          _shipLocationsArr.push(position);
+        //          ship position++
+        //      ship length--;
+        //
+        // if ship orientation 1:
+        // while ship.length, insert another position after exactly board length
+
+
+        // (1)
+        for(var i=0; i < _options.ships.length; i++){
+
+            console.log(_options.ships[i]);
+
+            // (2)
+            var shipStartsAt = _boardArr[Math.floor(Math.random() * _boardArr.length)];
+
+            console.log(shipStartsAt);
+        }
     };
 
     var _fire = function(e){
@@ -71,12 +91,13 @@ var ShipGame = (function(){
 
             if(arrayIndex != -1){
 
+                // remove a target from array once hit
                 _shipLocationsArr.splice(arrayIndex, 1);
 
                 //sink the ship
                 e.target.className += ' hit';
 
-                if(_shipLocationsArr.length == 0){
+                if(_shipLocationsArr.length < 1){
 
                     _win();
                 }
@@ -85,7 +106,6 @@ var ShipGame = (function(){
                 e.target.className += ' miss';
             }
         }
-
     };
     var _win = function(){
         alert('Congratulations, you have won the game');

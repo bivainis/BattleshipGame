@@ -1,4 +1,19 @@
-body {
-  background: blue; }
+@import url(http://fonts.googleapis.com/css?family=Nova+Mono);
+#board {
+  font-family: 'Nova Mono'; }
+
+.cell {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  border: 1px solid black;
+  text-align: center;
+  line-height: 30px;
+  text-transform: uppercase;
+  cursor: pointer; }
+  .cell.hit {
+    background: darkred; }
+  .cell.miss {
+    background: darkgrey; }
 
 /*# sourceMappingURL=style.css.map */
