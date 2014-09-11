@@ -48,6 +48,8 @@ var ShipGame = (function(){
 
         // add the board to body
         document.body.appendChild(_boardEl);
+
+        // place the ships
         _placeShips();
     };
 
@@ -58,6 +60,8 @@ var ShipGame = (function(){
         // 2) ranodmize orientation: 0 - horizontal, 1 - vertical
         // 3) random position in board array for ship start
         //  3a) make sure that positions are unique
+        //      check if value already exists in array
+        //      if yes, randomize a new value
         // 4) insert ship position id into _shipLocationsArr
         // if ship orientation is 0:
         // while ship.length,
@@ -70,21 +74,42 @@ var ShipGame = (function(){
         // if ship orientation 1:
         // while ship.length, insert another position after exactly board length
 
-
         // (1)
         for(var i=0; i < _options.ships.length; i++){
 
             var shipSize = _options.ships[i];
-            console.log(shipSize);
+            //console.log(shipSize);
 
             // (2) - ranodmize orientation: 0 - horizontal, 1 - vertical
             var shipOrientation = Math.floor(Math.random() * [0,1].length);
 
+//            console.log(_shipLocationsArr);
+
             // (3) - set random ship start position from board array
             var shipStartsAt = Math.floor(Math.random() * _boardArr.length);
 
-            // (4) - insert starting ship position ids into _shipLocationsArr
-            _shipLocationsArr.push(_boardArr[shipStartsAt]);
+            // (3a) - make sure that ship starting positions are unique
+            while(1){
+                if(_shipLocationsArr.indexOf(_boardArr[shipStartsAt]) == -1){
+                    // (4) - insert starting ship position ids into _shipLocationsArr
+                    _shipLocationsArr.push(_boardArr[shipStartsAt]);
+                    break;
+                } else {
+                    shipStartsAt = Math.floor(Math.random() * _boardArr.length);
+                    continue;
+                }
+            }
+
+            if (_shipLocationsArr.indexOf(_boardArr[shipStartsAt]) == -1){
+                // console.log('position doesnt exist');
+
+            } else {
+                // console.log('exists');
+
+            }
+
+//console.log(shipStartsAt);
+
 
             for(var j = 1; j < shipSize; j++){
 
