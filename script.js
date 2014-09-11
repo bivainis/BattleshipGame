@@ -1,12 +1,15 @@
 var ShipGame = (function(){
 
     var _boardEl,
+
         // letters for board cells
         _lettersArr = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','r','s','t','u','v','w','x','y','z'],
         _boardLettersArr,
-        _shipLocationsArr = ['a0', 'a1', 'a2'],
+        _shipLocationsArr,
+        _boardArr = [],
         _options = {
-            boardSize : 7 // default size
+            boardSize : 7, // default size
+            ships : [3,3,3]
         };
 
     var _setOptions = function(options){
@@ -35,8 +38,8 @@ var ShipGame = (function(){
                 cell.appendChild(cellText);
 
                 _boardEl.appendChild(cell);
-
-                //boardArr.push(boardLettersArr[i]+j);
+                console.log(_boardArr);
+                _boardArr.push(_boardLettersArr[i]+j);
 
             }
             // start a new row on the board
@@ -45,8 +48,18 @@ var ShipGame = (function(){
 
         // add the board to body
         document.body.appendChild(_boardEl);
+        _placeShips();
+    };
 
-        console.log(_boardLettersArr);
+    var _placeShips = function(){
+
+        // todo: array shuffle? ..maybe not
+        // todo: push to boardArr
+        // ship 1 locations
+        // set to vertical or horizontal
+        var orientation = 0; // horizontal
+        console.log(_boardArr);
+       // _shipLocationsArr.push();
     };
 
     var _fire = function(e){
@@ -77,12 +90,13 @@ var ShipGame = (function(){
     var _win = function(){
         alert('Congratulations, you have won the game');
     };
+
     var init = function(opts){
 
         _setOptions(opts);
         _createBoard(_options);
+
         document.onclick = _fire;
-        // todo: _randomizeShips();
     };
 
     return {
