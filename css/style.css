@@ -5,40 +5,45 @@
 body {
   font-family: 'Nova Mono'; }
 
+.container {
+  margin: 0 auto;
+  position: relative;
+  top: 50%; }
+
 #board {
-  float: left; }
+  float: left;
+  background: #1C3044;
+  color: white; }
+  #board .cell {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    text-align: center;
+    line-height: 30px;
+    text-transform: uppercase;
+    cursor: pointer; }
+    #board .cell.hit {
+      background: #FF8800; }
+    #board .cell.miss {
+      background: #064470; }
 
 #sidebar {
   width: 200px;
   float: left;
-  padding-left: 20px;
-  background: h4;
-    background-margin-top: 5px; }
+  padding-left: 20px; }
+  #sidebar h4 {
+    margin-top: 5px; }
   #sidebar > div {
     margin-bottom: 10px; }
   #sidebar .sidebarCell {
     display: inline-block;
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     background: #FF8800;
-    border-right: 2px solid #232323;
-    border-top: 2px solid #232323;
-    border-bottom: 2px solid #232323; }
+    border-right: 2px solid #1C3044;
+    border-top: 2px solid #1C3044;
+    border-bottom: 2px solid #1C3044; }
     #sidebar .sidebarCell:first-child {
-      border-left: 2px solid #232323; }
-
-.cell {
-  width: 30px;
-  height: 30px;
-  display: inline-block;
-  border: 1px solid black;
-  text-align: center;
-  line-height: 30px;
-  text-transform: uppercase;
-  cursor: pointer; }
-  .cell.hit {
-    background: darkred; }
-  .cell.miss {
-    background: darkgrey; }
+      border-left: 2px solid #1C3044; }
 
 /*# sourceMappingURL=style.css.map */

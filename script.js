@@ -37,7 +37,8 @@
 
 var ShipGame = (function(){
 
-    var _boardEl, // board container element
+    var _gameContainerEl,
+        _boardEl, // board container element
         _lettersArr = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','r','s','t','u','v','w','x','y','z'],
         _boardLettersArr,
         _shipLocationsArr = [],
@@ -67,10 +68,12 @@ var ShipGame = (function(){
     };
     var _createBoard = function(opts){
 
+
         // new letter array based on board size
         _boardLettersArr = _lettersArr.splice(0, _options.boardSize);
 
-        // create board div to hold all the cells
+
+
         _boardEl = document.createElement('div');
         _boardEl.setAttribute('id', 'board');
 
@@ -97,7 +100,14 @@ var ShipGame = (function(){
         }
 
         // add the board to body
-        document.body.appendChild(_boardEl);
+        // create board div to hold all the cells
+        _gameContainerEl = document.createElement('div');
+        _gameContainerEl.id = 'container';
+        _gameContainerEl.className = 'container';
+        _gameContainerEl.setAttribute("style", "margin-top:" + opts.boardSize * (-1) * 30 / 2 + "px");
+        _gameContainerEl.style.width = opts.boardSize * 30 + 200 + 'px';
+        _gameContainerEl.appendChild(_boardEl);
+        document.body.appendChild(_gameContainerEl);
 
         // place the ships
         _createSidebar();
@@ -128,8 +138,8 @@ var ShipGame = (function(){
 
             sidebarEl.appendChild(shipTag);
         }
-
-        document.body.appendChild(sidebarEl);
+        //sidebarEl.style.height = document.getElementById('board').style.height;
+        _gameContainerEl.appendChild(sidebarEl);
     };
     var _getRandomArrayIndex = function(arr){
 

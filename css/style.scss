@@ -6,48 +6,53 @@
 body {
   font-family:'Nova Mono';
 }
+.container {
+  margin:0 auto;
+  position:relative;
+  top:50%;
+}
 #board {
   float: left;
+  background: $darkBlue;
+  color:white;
+  .cell {
+    width:30px;
+    height:30px;
+    display: inline-block;
+    //border:1px solid white;
+    text-align:center;
+    line-height: 30px;
+    text-transform: uppercase;
+    cursor:pointer;
+    &.hit {
+      background : $orange;
+    }
+    &.miss {
+      background : $lightBlue;
+    }
+  }
 }
 #sidebar {
   width:200px;
   float:left;
   padding-left:20px;
-  background:
   h4 {
     margin-top:5px;
   }
   > div {
     margin-bottom:10px;
-
   }
   .sidebarCell {
     display: inline-block;
-    width:30px;
-    height:30px;
+    width:20px;
+    height:20px;
     background:$orange;
-    border-right: 2px solid $darkGray;
-    border-top: 2px solid $darkGray;
-    border-bottom: 2px solid $darkGray;
+    border-right: 2px solid $darkBlue;
+    border-top: 2px solid $darkBlue;
+    border-bottom: 2px solid $darkBlue;
 
     &:first-child {
-      border-left:2px solid $darkGray;
+      border-left:2px solid $darkBlue;
     }
-  }
-}
-.cell {
-  width:30px;
-  height:30px;
-  display: inline-block;
-  border:1px solid black;
-  text-align:center;
-  line-height: 30px;
-  text-transform: uppercase;
-  cursor:pointer;
-  &.hit {
-    background : darkred;
-  }
-  &.miss {
-    background : darkgrey;
   }
 }
