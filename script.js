@@ -64,10 +64,7 @@ var ShipGame = (function(){
 
         _shipLocationsArr.push(cell);
     };
-    var _checkUniquePosition = function(pos,shipSize, orientation){
-        console.log(pos);
-        return pos;
-    };
+
     var _calcForbiddenPositions = function(shipSize, orientation, board){
 
         if (orientation == 0){
@@ -99,6 +96,28 @@ var ShipGame = (function(){
             return badPosArr;
         }
     };
+//    var _checkUniquePosition = function(pos,shipSize, orientation){
+//        //console.log(pos);
+//
+//        if (orientation == 0)
+//
+//        return pos;
+//    };
+    var _isPositionFree = function(pos, shipSize, orientation){
+
+        if(orientation == 0){
+
+            for(var i = 0; i < shipSize; i++){
+
+                if(_shipLocationsArr.indexOf(_boardArr[pos+i]) != -1){
+
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    };
     var _placeShips = function(){
 
         for (var i=0; i < _options.ships.length; i++){
@@ -114,15 +133,39 @@ var ShipGame = (function(){
             randomPosition = _getRandomArrayIndex(_boardArr);
             randomCell = _boardArr[randomPosition];
             shipSize = _options.ships[i];
-            shipOrientation = Math.floor(Math.random() * [0,1].length);
-            randomPosition = _checkUniquePosition(randomPosition, shipSize, shipOrientation);
+            shipOrientation = 0; //Math.floor(Math.random() * [0,1].length);
+//            randomPosition = _checkUniquePosition(randomPosition, shipSize, shipOrientation);
 
             badPosArr = _calcForbiddenPositions(shipSize, shipOrientation, _boardArr);
+
+            console.log('is new pos free? '+_isPositionFree(randomPosition, shipSize, shipOrientation));
+
             if(shipOrientation == 0){
+
+                while(1){
+                    if(_isPositionFree(randomPosition, shipSize, shipOrientation)){
+                        console.log('free');
+                        break;
+                    } else{
+                        randomPosition = _getRandomArrayIndex(_boardArr);
+                        console.log('generate new position');
+                        continue;
+                    }
+                }
+//                console.log('--------------');
+//                console.log('pos ' + randomPosition);
+//                console.log('size ' + shipSize);
+//                console.log('orientation ' + shipOrientation);
 
                 if(badPosArr.indexOf(randomPosition) != -1){
 
+//                    console.log('in bad positions');
                     randomPosition -= (shipSize - 1);
+//                    console.log('is new pos free? '+_isPositionFree(randomPosition, shipSize, shipOrientation));
+//                    while(_isPositionTaken){
+//                        randomPosition--;
+//                    }
+
                 }
 
                 for (j=0; j < _options.ships[i];j++){
