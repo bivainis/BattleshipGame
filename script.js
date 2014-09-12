@@ -44,7 +44,7 @@ var ShipGame = (function(){
         _shipLocationsArr = [],
         _boardArr = [],
         _options = {
-            boardSize : 7, // default size
+            boardSize : prompt('Enter board size: (5 - ' + _lettersArr.length + ')'),
             ships : [3,2,1]
         };
 
@@ -225,17 +225,15 @@ var ShipGame = (function(){
 
             badPosArr = _calcForbiddenPositions(shipSize, shipOrientation, _boardArr);
 
-            console.log('is new pos free? '+_isPositionFree(randomPosition, shipSize, shipOrientation));
-
             if(shipOrientation == 0){
 
                 while(1){
                     if(_isPositionFree(randomPosition, shipSize, shipOrientation)){
-                        console.log('free');
+
                         break;
                     } else{
+
                         randomPosition = _getRandomArrayIndex(_boardArr);
-                        console.log('generate new position');
                         continue;
                     }
                 }
