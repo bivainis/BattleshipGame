@@ -1,7 +1,9 @@
 BattleshipGame
 ==============
 School assignment - Battleship Game
+
 Created by: Gediminas Bivainis
+
 Deadline: September 13th, 2014
 
 v1 specs:
