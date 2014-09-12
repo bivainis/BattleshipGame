@@ -31,15 +31,18 @@ var ShipGame = (function(){
 
             for (var j=0; j < _options.boardSize; j++){
 
-                var cell = document.createElement('span');
-                var cellText = document.createTextNode(_boardLettersArr[i]+(j+1));
+                var cell, cellText, toPush;
+
+                cell = document.createElement('span');
+                cellText = document.createTextNode(_boardLettersArr[i]+(j+1));
                 cell.dataset.cellid = _boardLettersArr[i]+j;
                 cell.className = 'cell';
                 cell.appendChild(cellText);
 
                 _boardEl.appendChild(cell);
-                //console.log(_boardArr);
-                _boardArr.push(_boardLettersArr[i]+j);
+
+                toPush = _boardLettersArr[i]+j;
+                _boardArr.push(toPush);
 
             }
             // start a new row on the board
@@ -58,24 +61,43 @@ var ShipGame = (function(){
     };
 
     var _addShipCell = function(cell){
+
         _shipLocationsArr.push(cell);
     };
-    var _calcForbiddenPositions = function(shipSize){
+    var _checkUniquePosition = function(pos,shipSize, orientation){
+        console.log(pos);
+        return pos;
+    };
+    var _calcForbiddenPositions = function(shipSize, orientation, board){
 
-        var badPosArr = [];
-        var badPos = _options.boardSize - shipSize + 1;
+        if (orientation == 0){
 
-        for(var k = 0; k < _options.boardSize; k++){
+            var badPosArr = [];
+            var badPos = _options.boardSize - shipSize + 1;
 
-            for(var l=0; l < shipSize - 1; l++){
+            for(var k = 0; k < _options.boardSize; k++){
 
-                badPosArr.push(badPos+l);
+                for(var l=0; l < shipSize - 1; l++){
+
+                    badPosArr.push(badPos+l);
+                }
+
+                badPos += _options.boardSize;
             }
 
-            badPos += _options.boardSize;
-        }
+            return badPosArr;
 
-        return badPosArr;
+        } else if (orientation == 1) {
+
+            var badPosArr = [];
+            var slicedArr = board.slice(-(_options.boardSize * (shipSize-1)));
+
+            for(var i = 0; i < slicedArr.length; i++){
+                badPosArr.push(board.indexOf(slicedArr[i]));
+            }
+
+            return badPosArr;
+        }
     };
     var _placeShips = function(){
 
@@ -85,25 +107,48 @@ var ShipGame = (function(){
                 randomCell,
                 shipSize,
                 badPosArr,
+                shipOrientation,
                 j;
 
+            // (2) - ranodmize orientation: 0 - horizontal, 1 - vertical
             randomPosition = _getRandomArrayIndex(_boardArr);
             randomCell = _boardArr[randomPosition];
             shipSize = _options.ships[i];
-            badPosArr = _calcForbiddenPositions(shipSize);
+            shipOrientation = Math.floor(Math.random() * [0,1].length);
+            randomPosition = _checkUniquePosition(randomPosition, shipSize, shipOrientation);
 
-            if(badPosArr.indexOf(randomPosition) != -1){
-                randomPosition -= shipSize -1;
+            badPosArr = _calcForbiddenPositions(shipSize, shipOrientation, _boardArr);
+            if(shipOrientation == 0){
+
+                if(badPosArr.indexOf(randomPosition) != -1){
+
+                    randomPosition -= (shipSize - 1);
+                }
+
+                for (j=0; j < _options.ships[i];j++){
+
+                    _addShipCell(_boardArr[randomPosition]);
+                    randomPosition++;
+                }
+            }
+            else if (shipOrientation == 1){
+
+                if(badPosArr.indexOf(randomPosition) != -1){
+
+                    randomPosition -= (shipSize -1) * _options.boardSize;
+                }
+
+                for (j=0; j < _options.ships[i];j++){
+
+                    _addShipCell(_boardArr[randomPosition]);
+                    randomPosition+= _options.boardSize;
+                }
             }
 
-            for (j=0; j < _options.ships[i];j++){
-
-                _shipLocationsArr.push(_boardArr[randomPosition]);
-                randomPosition++;
-            }
         }
+        console.log(_shipLocationsArr);
     };
-    console.log(_shipLocationsArr);
+
         // todo:
         // 1) for each ship inside ships array
         // 2) ranodmize orientation: 0 - horizontal, 1 - vertical
@@ -129,8 +174,7 @@ var ShipGame = (function(){
 
             var shipSize = _options.ships[i];
 
-            // (2) - ranodmize orientation: 0 - horizontal, 1 - vertical
-            //var shipOrientation = Math.floor(Math.random() * [0].length);
+
 
 
             // (3) - set random ship start position from board array
