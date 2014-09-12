@@ -7,7 +7,7 @@
  */
 
 /*
- // todo:
+ // pseudo:
  // 1) for each ship inside ships array
  // 2) ranodmize orientation: 0 - horizontal, 1 - vertical
  // 3) random position in board array for ship start
@@ -72,7 +72,6 @@
 
  ** [11] RETURN INIT FUNCTION
 * */
-
 
 var ShipGame = (function(){
 
