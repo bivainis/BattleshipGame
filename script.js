@@ -37,9 +37,7 @@
 
 var ShipGame = (function(){
 
-    var _boardEl,
-
-        // letters for board cells
+    var _boardEl, // board container element
         _lettersArr = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','r','s','t','u','v','w','x','y','z'],
         _boardLettersArr,
         _shipLocationsArr = [],
@@ -51,8 +49,9 @@ var ShipGame = (function(){
 
     var _setOptions = function(options){
 
-        var largestShip;
+        var largestShip; // to use below
 
+        // set local options if options are passed after initializing the game
         _options.ships = options.ships ? options.ships : _options.ships;
         _options.boardSize = options.boardSize ? options.boardSize : _options.boardSize;
 
@@ -64,7 +63,7 @@ var ShipGame = (function(){
             _options.boardSize = prmt ? _options.boardSize = largestShip + 1 : confirm('Board size must be 1 square larger than the largest ship. Adjust boardsize?');
         }
 
-        console.log(_options.boardSize);
+
     };
     var _createBoard = function(opts){
 
@@ -101,7 +100,36 @@ var ShipGame = (function(){
         document.body.appendChild(_boardEl);
 
         // place the ships
+        _createSidebar();
         _placeShips();
+    };
+    var _createSidebar = function(){
+
+        var sidebarEl = document.createElement('div');
+        sidebarEl.id = 'sidebar';
+
+        var title = document.createElement('h4');
+        var titleText = document.createTextNode('Destroy these ships');
+        title.appendChild(titleText);
+        sidebarEl.appendChild(title);
+
+        // for each ship, add ship representation to sidebar list
+        for (var i = 0; i < _options.ships.length; i++){
+
+            var shipTag = document.createElement('div');
+
+            for (var j = 0; j < _options.ships[i]; j++){
+
+                var spn = document.createElement('span');
+                spn.className = 'sidebarCell';
+
+                shipTag.appendChild(spn);
+            }
+
+            sidebarEl.appendChild(shipTag);
+        }
+
+        document.body.appendChild(sidebarEl);
     };
     var _getRandomArrayIndex = function(arr){
 
@@ -183,8 +211,7 @@ var ShipGame = (function(){
             randomPosition = _getRandomArrayIndex(_boardArr);
             randomCell = _boardArr[randomPosition];
             shipSize = _options.ships[i];
-            shipOrientation = 0; //Math.floor(Math.random() * [0,1].length);
-//            randomPosition = _checkUniquePosition(randomPosition, shipSize, shipOrientation);
+            shipOrientation = Math.floor(Math.random() * [0,1].length);
 
             badPosArr = _calcForbiddenPositions(shipSize, shipOrientation, _boardArr);
 
@@ -237,17 +264,17 @@ var ShipGame = (function(){
                     randomPosition+= _options.boardSize;
                 }
             }
-
         }
     };
+    _updateSidebar = function(){
 
-
+    };
     var _fire = function(e){
 
         if(e.target.dataset.cellid){
 
-            var targetid = e.target.dataset.cellid;
-            var arrayIndex = _shipLocationsArr.indexOf(targetid);
+            var targetId = e.target.dataset.cellid;
+            var arrayIndex = _shipLocationsArr.indexOf(targetId);
 
             if(arrayIndex != -1){
 
@@ -268,6 +295,7 @@ var ShipGame = (function(){
         }
     };
     var _win = function(){
+
         alert('Congratulations, you have won the game');
     };
 
@@ -282,5 +310,4 @@ var ShipGame = (function(){
     return {
         init : init
     };
-
 })();

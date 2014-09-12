@@ -20,4 +20,5 @@ v2:
 * slide out unused version
 * maybe canvas
 * add letter and number indexes
-* god mode into options
+* different colors for different ship sizes
+* display ship sizes in a sidebar

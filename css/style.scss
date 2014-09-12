@@ -1,8 +1,40 @@
 @import url(http://fonts.googleapis.com/css?family=Nova+Mono);
-#board {
-  font-family: 'Nova Mono';
+@import "partials/colors";
+* {
+  box-sizing: border-box;
 }
+body {
+  font-family:'Nova Mono';
+}
+#board {
+  float: left;
+}
+#sidebar {
+  width:200px;
+  float:left;
+  padding-left:20px;
+  background:
+  h4 {
+    margin-top:5px;
+  }
+  > div {
+    margin-bottom:10px;
 
+  }
+  .sidebarCell {
+    display: inline-block;
+    width:30px;
+    height:30px;
+    background:$orange;
+    border-right: 2px solid $darkGray;
+    border-top: 2px solid $darkGray;
+    border-bottom: 2px solid $darkGray;
+
+    &:first-child {
+      border-left:2px solid $darkGray;
+    }
+  }
+}
 .cell {
   width:30px;
   height:30px;

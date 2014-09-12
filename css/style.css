@@ -1,6 +1,31 @@
 @import url(http://fonts.googleapis.com/css?family=Nova+Mono);
-#board {
+* {
+  box-sizing: border-box; }
+
+body {
   font-family: 'Nova Mono'; }
+
+#board {
+  float: left; }
+
+#sidebar {
+  width: 200px;
+  float: left;
+  padding-left: 20px;
+  background: h4;
+    background-margin-top: 5px; }
+  #sidebar > div {
+    margin-bottom: 10px; }
+  #sidebar .sidebarCell {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background: #FF8800;
+    border-right: 2px solid #232323;
+    border-top: 2px solid #232323;
+    border-bottom: 2px solid #232323; }
+    #sidebar .sidebarCell:first-child {
+      border-left: 2px solid #232323; }
 
 .cell {
   width: 30px;
