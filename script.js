@@ -427,14 +427,24 @@ var ShipGame = (function(){
 
         if (localStorage.shipGameScores){
 
-            var scores = JSON.parse(localStorage.shipGameScores);
+            var scores = JSON.parse(localStorage.shipGameScores); //[{"name":"Gediminas","score":66},{"name":"asdf","score":78}]
             var i = 0;
+            var scoreArr = [{score : 0}];
 
-            for (;i < scores.length; i++){
+            scores.sort(function (a, b) {
+                if (a.score > b.score) {
+                    return 1;
+                }
+                if (a.score < b.score) {
+                    return -1;
+                }
+                // a must be equal to b
+                return 0;
+            });
+            for (;i < scores.length; i++) {
 
                 html += ('<li>' + scores[i].score + ' ' + scores[i].name + '</li>');
             }
-
         } else {
             html = '<li>No scores yet</li>'
         }
