@@ -85,7 +85,8 @@ var ShipGame = (function(){
         _options = {
             boardSize : 7,
             ships : [3,2,1]
-        };
+        },
+        _score = 0;
 
 
     var _setOptions = function(options){
@@ -166,6 +167,8 @@ var ShipGame = (function(){
 
         var title = document.createElement('h4');
         var titleText = document.createTextNode('Destroy these ships');
+        var scoreResultEl = document.createElement('div');
+
         title.appendChild(titleText);
         sidebarEl.appendChild(title);
 
@@ -187,6 +190,13 @@ var ShipGame = (function(){
 
             sidebarEl.appendChild(shipTag);
         }
+        title = document.createElement('h4');
+        titleText = document.createTextNode('Score');
+        title.appendChild(titleText);
+        sidebarEl.appendChild(title);
+
+        scoreResultEl.id = 'scoreResult';
+        sidebarEl.appendChild(scoreResultEl);
 
         _gameContainerEl.appendChild(sidebarEl);
     };
@@ -361,24 +371,43 @@ var ShipGame = (function(){
 
                 // [9c] add hit class to sink the ship
                 e.target.className += ' hit';
-
+                _score+=10;
                 // [9d] if there are no more cells, run win function [10]
                 if(_shipLocationsArr.length < 1){
 
-                    _win();
+                    _win(_score);
                 }
             } else {
+                if(_score>0) {
+                    _score--;
+                }
 
                 e.target.className += ' miss';
             }
+
+            // update score sidebar with current score
+            _updateScores(_score);
         }
     };
     // [10] WIN NOTIFICATION
-    var _win = function(){
+    var _win = function(score){
 
-        alert('Congratulations, you have won the game');
+        alert('Congratulations, you have won the game, score is ' + score);
+        _storeTheScore(score);
     };
+    var _updateScores = function(score){
 
+        var scoreEl = document.getElementById('scoreResult');
+        var scoreText = document.createTextNode(score);
+        //scoreEl.removeChild(scoreText);
+        scoreEl.innerHTML = score;
+    };
+    var _storeTheScore = function(score){
+
+        var currentScoreBoard = localStorage.shipGameScores ? JSON.parse(localStorage.shipGameScores) : [];
+        currentScoreBoard.push(score);
+        localStorage.shipGameScores = JSON.stringify(currentScoreBoard);
+    };
     // [11] RETURN INIT FUNCTION
     var init = function(opts){
 
