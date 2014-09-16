@@ -9,13 +9,15 @@
 <script>
     // initialize the game;
     var options = {};
-    var randomNum = Math.floor(Math.random() * 5 + 3);
-    options.boardSize = Math.floor(Math.random() * 7);
+
+    options.boardSize = Math.floor(Math.random() * 7) + 3;
     options.ships = [];
 
-    for (var i = 0; i < randomNum; i++){
+    for (var i = 0; i < (options.boardSize - 2); i++){
 
-        options.ships.push(Math.floor(Math.random() * 5));
+        var num = Math.floor(Math.random() * options.boardSize) + 1;
+
+        options.ships.push(num);
     }
 
     ShipGame.init(options);

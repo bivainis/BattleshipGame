@@ -415,6 +415,7 @@ var ShipGame = (function(){
         var currentScoreBoard = localStorage.shipGameScores ? JSON.parse(localStorage.shipGameScores) : [];
         currentScoreBoard.push({"name": _playerName,"score" : score});
         localStorage.shipGameScores = JSON.stringify(currentScoreBoard);
+        window.location.reload();
     };
     var _createScoreBoard = function(){
 
@@ -433,10 +434,10 @@ var ShipGame = (function(){
 
             scores.sort(function (a, b) {
                 if (a.score > b.score) {
-                    return 1;
+                    return -1;
                 }
                 if (a.score < b.score) {
-                    return -1;
+                    return 1;
                 }
                 // a must be equal to b
                 return 0;
