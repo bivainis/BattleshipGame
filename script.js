@@ -29,7 +29,7 @@
 
 /*
 * todo:
-* scoreboard
+* fix ship placing algo
 *
 * */
 
@@ -428,18 +428,18 @@ var ShipGame = (function(){
 
         if (localStorage.shipGameScores){
 
-            var scores = JSON.parse(localStorage.shipGameScores); //[{"name":"Gediminas","score":66},{"name":"asdf","score":78}]
+            var scores = JSON.parse(localStorage.shipGameScores); //[{"name":"Gediminas","score":66},{"name":"John","score":78}]
             var i = 0;
-            var scoreArr = [{score : 0}];
 
+            // sort scores array by score inside an object
             scores.sort(function (a, b) {
+
                 if (a.score > b.score) {
                     return -1;
                 }
                 if (a.score < b.score) {
                     return 1;
                 }
-                // a must be equal to b
                 return 0;
             });
             for (;i < scores.length; i++) {
