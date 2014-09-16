@@ -30,7 +30,6 @@
 /*
 * todo:
 * scoreboard
-* player name
 *
 * */
 
@@ -412,7 +411,7 @@ var ShipGame = (function(){
         scoreEl.innerHTML = score;
     };
     var _storeTheScore = function(score){
-
+        _playerName = prompt('Your name?');
         var currentScoreBoard = localStorage.shipGameScores ? JSON.parse(localStorage.shipGameScores) : [];
         currentScoreBoard.push({"name": _playerName,"score" : score});
         localStorage.shipGameScores = JSON.stringify(currentScoreBoard);
@@ -447,7 +446,6 @@ var ShipGame = (function(){
     // [11] RETURN INIT FUNCTION
     var init = function(opts){
 
-        _playerName = prompt('Your name?');
         _setOptions(opts);
         _createBoard(_options);
         _createScoreBoard();
