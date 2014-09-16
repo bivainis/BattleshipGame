@@ -28,6 +28,13 @@
  */
 
 /*
+* todo:
+* scoreboard
+* player name
+*
+* */
+
+/*
 * Table of contents:
 
  ** [1] SET GAME VARS AND SETTINGS
@@ -86,7 +93,8 @@ var ShipGame = (function(){
             boardSize : 7,
             ships : [3,2,1]
         },
-        _score = 0;
+        _score = 0,
+        _playerName = '';
 
 
     var _setOptions = function(options){
@@ -392,7 +400,8 @@ var ShipGame = (function(){
     // [10] WIN NOTIFICATION
     var _win = function(score){
 
-        alert('Congratulations, you have won the game, score is ' + score);
+        alert('Congratulations, '+ _playerName + ' you have won the game, score is ' + score);
+
         _storeTheScore(score);
     };
     var _updateScores = function(score){
@@ -405,15 +414,43 @@ var ShipGame = (function(){
     var _storeTheScore = function(score){
 
         var currentScoreBoard = localStorage.shipGameScores ? JSON.parse(localStorage.shipGameScores) : [];
-        currentScoreBoard.push(score);
+        currentScoreBoard.push({"name": _playerName,"score" : score});
         localStorage.shipGameScores = JSON.stringify(currentScoreBoard);
+    };
+    var _createScoreBoard = function(){
+
+        var scoreBoardEl = document.createElement('div');
+        var scoreBoardListEl = document.createElement('ul');
+        var html = '';
+
+        scoreBoardEl.style.clear = "both";
+        scoreBoardListEl.id = 'scoreBoard';
+
+        if (localStorage.shipGameScores){
+
+            var scores = JSON.parse(localStorage.shipGameScores);
+            var i = 0;
+
+            for (;i < scores.length; i++){
+
+                html += ('<li>' + scores[i].score + ' ' + scores[i].name + '</li>');
+            }
+
+        } else {
+            html = '<li>No scores yet</li>'
+        }
+        scoreBoardListEl.innerHTML = html;
+        scoreBoardEl.appendChild(scoreBoardListEl);
+
+        document.getElementById('container').appendChild(scoreBoardEl);
     };
     // [11] RETURN INIT FUNCTION
     var init = function(opts){
 
+        _playerName = prompt('Your name?');
         _setOptions(opts);
         _createBoard(_options);
-
+        _createScoreBoard();
         document.onclick = _fire;
     };
 
